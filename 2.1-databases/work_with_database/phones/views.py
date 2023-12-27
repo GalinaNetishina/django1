@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from phones.models import Phone
 
 
 def index(request):
@@ -7,7 +8,8 @@ def index(request):
 
 def show_catalog(request):
     template = 'catalog.html'
-    context = {}
+    phones_obj = Phone.objects.all()
+    context = [dict(**item) for item in phones_obj]
     return render(request, template, context)
 
 
