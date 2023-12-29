@@ -23,6 +23,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,11 +52,11 @@ MIDDLEWARE = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'netology_import_phones',
+        'NAME': 'phones',
         'HOST': '127.0.0.1',
         'PORT': '5432',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
     }
 }
 
@@ -119,4 +120,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+DATE_INPUT_FORMATS = ['%Y-%m-%d']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
