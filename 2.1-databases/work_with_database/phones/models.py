@@ -7,9 +7,8 @@ class Phone(models.Model):
     image = models.ImageField(upload_to='images')
     release_date = models.DateField()
     lte_exists = models.BooleanField(default=False)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return f"{self.slug} {self.name} {self.price} {self.lte_exists}"
-
 

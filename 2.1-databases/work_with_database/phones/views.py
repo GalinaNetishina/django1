@@ -1,22 +1,31 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from phones.management.commands.import_phones import Command
 from phones.models import Phone
 
 
+# Create your views here.
 def index(request):
-    Command.handle()
     return redirect('catalog')
 
 
 def show_catalog(request):
+    sort = request.GET.get('sort')
     template = 'catalog.html'
-    phones_obj = Phone.objects.all()
-    context = {'phones': phones_obj}
-    return render(request, template, context)
+    match sort:
+        case 'name':
+            phones = Phone.objects.order_by('name')
+        case 'max_price':
+            phones = Phone.objects.order_by('-price')
+        case 'min_price':
+            phones = Phone.objects.order_by('price')
+        case _:
+            phones = Phone.objects.all()
+
+    return render(request, template, {'phones': phones})
 
 
 def show_product(request, slug):
     template = 'product.html'
-    context = {}
-    return render(request, template, context)
+    phone = Phone.objects.get(slug=slug)
+    return render(request, template, context={'phone': phone})

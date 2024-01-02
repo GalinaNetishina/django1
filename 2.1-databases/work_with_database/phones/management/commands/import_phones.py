@@ -2,6 +2,8 @@ import csv
 import datetime
 
 from django.core.management.base import BaseCommand
+from django.utils.text import slugify
+
 from phones.models import Phone
 
 
@@ -19,5 +21,6 @@ class Command(BaseCommand):
                 image=phone.get('image'),
                 price=phone.get('price'),
                 release_date=datetime.date.fromisoformat(phone.get('release_date')),
+                slug=slugify(phone.get('name')),
                 lte_exists=phone.get('lte_exists')
             )
