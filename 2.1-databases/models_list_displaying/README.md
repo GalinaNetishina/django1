@@ -41,14 +41,15 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
+- Для загрузки начальных данных модели Book необходимо выполнить команду:
+
+```bash
+python manage.py loaddata fixtures/books.json
+```
+
 - Команда для запуска приложения
 
 ```bash
 python manage.py runserver
 ```
 
-- Для загрузки начальных данных модели Book необходимо выполнить команду:
-
-```bash
-python manage.py loaddata fixtures/books.json
-```
