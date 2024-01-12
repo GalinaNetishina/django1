@@ -1,0 +1,86 @@
+[
+  {
+    "model": "measurement.sensor",
+    "pk": 1,
+    "fields": {
+      "name": "id1",
+      "description": "kitchen"
+    }
+  },
+  {
+    "model": "measurement.sensor",
+    "pk": 2,
+    "fields": {
+      "name": "home2",
+      "description": "bedroom"
+    }
+  },
+  {
+    "model": "measurement.sensor",
+    "pk": 3,
+    "fields": {
+      "name": "id2",
+      "description": "street"
+    }
+  },
+  {
+    "model": "measurement.sensor",
+    "pk": 4,
+    "fields": {
+      "name": "sens0",
+      "description": ""
+    }
+  },
+  {
+    "model": "measurement.sensor",
+    "pk": 5,
+    "fields": {
+      "name": "ESP32",
+      "description": "Перенес датчик на балкон"
+    }
+  },
+  {
+    "model": "measurement.sensor",
+    "pk": 6,
+    "fields": {
+      "name": "ESP32",
+      "description": "Датчик на кухне за холодильником"
+    }
+  },
+  {
+    "model": "measurement.measurement",
+    "pk": 1,
+    "fields": {
+      "sensor": 2,
+      "temperature": "24.6",
+      "created_at": "2024-01-11T14:50:55Z"
+    }
+  },
+  {
+    "model": "measurement.measurement",
+    "pk": 2,
+    "fields": {
+      "sensor": 4,
+      "temperature": "25.0",
+      "created_at": "2024-01-12T10:26:37Z"
+    }
+  },
+  {
+    "model": "measurement.measurement",
+    "pk": 3,
+    "fields": {
+      "sensor": 1,
+      "temperature": "19.8",
+      "created_at": "2024-01-12T11:59:10.592Z"
+    }
+  },
+  {
+    "model": "measurement.measurement",
+    "pk": 4,
+    "fields": {
+      "sensor": 1,
+      "temperature": "22.5",
+      "created_at": "2024-01-12T11:59:10.592Z"
+    }
+  }
+]

@@ -83,6 +83,8 @@ DATABASES = {
         'NAME': 'netology_smart_home',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+        'USER': 'admin',
+        'PASSWORD': 'admin'
     }
 }
 
@@ -122,7 +124,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+MEDIA_ROOT = '/media/'
 STATIC_URL = '/static/'
 
 # Default primary key field type
