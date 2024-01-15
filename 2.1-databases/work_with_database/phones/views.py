@@ -10,19 +10,18 @@ def index(request):
 
 
 def show_catalog(request):
-    sort = request.GET.get('sort')
     template = 'catalog.html'
-    match sort:
-        case 'name':
-            phones = Phone.objects.order_by('name')
-        case 'max_price':
-            phones = Phone.objects.order_by('-price')
-        case 'min_price':
-            phones = Phone.objects.order_by('price')
-        case _:
-            phones = Phone.objects.all()
-
-    return render(request, template, {'phones': phones})
+    SORT_MAP = {
+        'name': 'name',
+        'min_price': 'price',
+        'max_price': '-price',
+        }
+    phones = Phone.objects.all()
+    sort = request.GET.get('sort')
+    if sort:
+        phones = phones.order_by(SORT_MAP[sort])
+    context = {'phones': phones}
+    return render(request, template, context)
 
 
 def show_product(request, slug):

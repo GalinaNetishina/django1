@@ -4,24 +4,21 @@ from measurement.models import Sensor, Measurement
 
 
 class MeasurementSerializer(serializers.ModelSerializer):
+    temperature = serializers.DecimalField(max_digits=4, decimal_places=1)
+    created_at = serializers.CharField(read_only=True)
+    photo = serializers.ImageField(read_only=True, allow_null=True)
+
     class Meta:
         model = Measurement
-        fields = ['temperature', 'created_at']
+        exclude = ['id']
 
 
 class SensorsSerializer(serializers.ModelSerializer):
+    description = serializers.CharField(allow_null=True)
+
     class Meta:
         model = Sensor
-        fields = '__all__'
-
-    def create(self, validated_data):
-        return Sensor.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        for field, value in validated_data.items:
-            instance.field = value
-        instance.save()
-        return instance
+        fields = ['id', 'name', 'description']
 
 
 class SensorDetailSerializer(serializers.ModelSerializer):

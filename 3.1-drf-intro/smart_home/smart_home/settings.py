@@ -55,6 +55,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'smart_home.urls'
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_RENDERER_CLASSES': [
+#         'rest_framework.renderers.JSONRenderer',
+#     ]
+# }
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -83,8 +89,8 @@ DATABASES = {
         'NAME': 'netology_smart_home',
         'HOST': '127.0.0.1',
         'PORT': '5432',
-        'USER': 'admin',
-        'PASSWORD': 'admin'
+        'USER': 'postgres',
+        'PASSWORD': 'postgres'
     }
 }
 
@@ -124,7 +130,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-MEDIA_ROOT = '/media/'
+MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = BASE_DIR/'static'
 STATIC_URL = '/static/'
 
 # Default primary key field type

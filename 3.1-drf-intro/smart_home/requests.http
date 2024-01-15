@@ -8,12 +8,12 @@ Content-Type: application/json
 
 ###
 
-# создание датчика ✅
+# создание датчика 
 POST {{baseUrl}}/sensors/
 Content-Type: application/json
 
 {
-  "name": "ESP32",
+  "name": "ESP36",
   "description": "Датчик на кухне за холодильником"
 }
 
@@ -41,5 +41,5 @@ Content-Type: application/json
 ###
 
 # получение информации по датчику ✅
-GET {{baseUrl}}/sensors/1/
+GET {{baseUrl}}/sensors/2/
 Content-Type: application/json
