@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-# создание датчика 
+# создание датчика ✅
 POST {{baseUrl}}/sensors/
 Content-Type: application/json
 
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ###
 
-# обновление датчика
+# обновление датчика ✅
 PATCH {{baseUrl}}/sensors/1/
 Content-Type: application/json
 
@@ -29,7 +29,7 @@ Content-Type: application/json
 
 ###
 
-# добавление измерения
+# добавление измерения ✅
 POST {{baseUrl}}/measurements/
 Content-Type: application/json
 
