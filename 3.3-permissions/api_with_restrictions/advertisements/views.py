@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
@@ -12,8 +13,9 @@ from advertisements.serializers import AdvertisementSerializer
 
 class AdvertisementViewSet(ModelViewSet):
     """ViewSet для объявлений."""
-    queryset = Advertisement.objects.all()
+    queryset = Advertisement.objects.filter(~Q(status="DRAFT"))
     serializer_class = AdvertisementSerializer
+
     filterset_class = AdvertisementFilter
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['creator']
@@ -24,9 +26,11 @@ class AdvertisementViewSet(ModelViewSet):
     def get_permissions(self):
         """Получение прав для действий."""
         if self.action == "mark_favorite":
-            return [IsNoOwner()]
+            return [IsAuthenticated, IsNoOwner()]
         if self.action in ["create", "update", "partial_update"]:
-            return [IsOwnerOrReadOnly()]
+            return [IsOwnerOrReadOnly()] # | IsAdmin]
+        if IsAuthenticated():
+            self.queryset = self.queryset | Advertisement.objects.filter(Q(status="DRAFT")&Q(creator=self.request.user.id))
         return [IsAuthenticatedOrReadOnly()]
 
     @action(methods=['post'], detail=True, url_path='toggle-mark')
@@ -41,6 +45,6 @@ class AdvertisementViewSet(ModelViewSet):
             user.favorites.add(post)
         return Response({'status': "Added" if mark else "Removed"})
 
-    @action(methods=['post'], detail=False)
+    @action(methods=['get'], detail=False)
     def get_favorite(self, request, *args, **kwargs):
         pass

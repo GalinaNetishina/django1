@@ -12,7 +12,7 @@ Content-Type: application/json
 # создание объявления
 POST {{baseUrl}}/advertisements/
 Content-Type: application/json
-Authorization: Token {{token1}}
+Authorization: Token {{token2}}
 
 {
   "title": "Шкаф IKEA",
@@ -22,12 +22,12 @@ Authorization: Token {{token1}}
 ###
 
 # попытка поменять объявление
-PATCH {{baseUrl}}/advertisements/45/
+PATCH {{baseUrl}}/advertisements/48/
 Content-Type: application/json
-Authorization: Token {{token1}}
+Authorization: Token {{token2}}
 
 {
-  "status": "CLOSED"
+  "status": "DRAFT"
 }
 
 ###
@@ -35,6 +35,7 @@ Authorization: Token {{token1}}
 # фильтрация по создателю
 GET {{baseUrl}}/advertisements/?creator=2
 Content-Type: application/json
+Authorization: Token {{token2}}
 
 ###
 
