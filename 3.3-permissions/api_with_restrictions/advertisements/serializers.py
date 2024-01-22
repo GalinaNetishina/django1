@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name',
-                  'last_name',)
+                  'last_name')
 
 
 class AdvertisementSerializer(serializers.ModelSerializer):
@@ -24,7 +24,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advertisement
         fields = ('id', 'title', 'description', 'creator',
-                  'status', 'created_at', )
+                  'status', 'created_at')
 
     def create(self, validated_data):
         """Метод для создания"""
@@ -44,7 +44,6 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         # TODO: добавьте требуемую валидацию
 
         count_opened = Advertisement.objects.all().filter(creator=self.context["request"].user).filter(status='OPEN').count()
-        print(count_opened)
         stat = self.initial_data.get('status', 'OPEN')
         if count_opened > 10 and stat == 'OPEN':
             raise ValidationError('Слишком много активных объявлений, закройте одно из старых или укажите в запросе "status": "CLOSED" либо "DRAFT"')

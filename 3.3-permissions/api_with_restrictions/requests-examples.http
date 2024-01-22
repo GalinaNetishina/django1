@@ -3,6 +3,8 @@
 @baseUrl = http://localhost:8000/api
 @token1 = b5a5a5482f0dd108e76b92ec39eb8169740ca2e8
 @token2 = 607feb80b950313167ac267511c6fdef79f8ae4e
+@token_admin = c0d04a813fa4dcc9fd5a0854eec9415aaca5c40e
+
 # получение объявлений
 GET {{baseUrl}}/advertisements/
 Content-Type: application/json
@@ -22,12 +24,12 @@ Authorization: Token {{token2}}
 ###
 
 # попытка поменять объявление
-PATCH {{baseUrl}}/advertisements/48/
+PATCH {{baseUrl}}/advertisements/42/
 Content-Type: application/json
-Authorization: Token {{token2}}
+Authorization: Token {{token_admin}}
 
 {
-  "status": "DRAFT"
+  "status": "OPEN"
 }
 
 ###
@@ -46,6 +48,13 @@ Content-Type: application/json
 ###
 
 # Отметить избранным/Снять метку
-POST {{baseUrl}}/advertisements/41/toggle-mark/
+POST {{baseUrl}}/advertisements/42/toggle-mark/
+Content-Type: application/json
+Authorization: Token {{token2}}
+
+###
+
+# Получить список избранных
+GET {{baseUrl}}/advertisements/favorites/
 Content-Type: application/json
 Authorization: Token {{token2}}

@@ -30,4 +30,4 @@ class Advertisement(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True
     )
-    favorite_by = models.ManyToManyField(User, related_name="favorites", blank=True)
+    users = models.ManyToManyField(User, related_name="favorites", blank=True)

@@ -25,17 +25,17 @@ class AdvertisementViewSet(ModelViewSet):
 
     def get_permissions(self):
         """Получение прав для действий."""
-        if self.action == "mark_favorite":
-            return [IsAuthenticated, IsNoOwner()]
-        if self.action in ["create", "update", "partial_update"]:
-            return [IsOwnerOrReadOnly()] # | IsAdmin]
         if IsAuthenticated():
-            self.queryset = self.queryset | Advertisement.objects.filter(Q(status="DRAFT")&Q(creator=self.request.user.id))
+            self.queryset = self.queryset | Advertisement.objects.filter(Q(status="DRAFT") & Q(creator=self.request.user.id))
+        if self.action == "mark_favorite":
+            return [IsAuthenticated(), IsNoOwner()]
+        if self.action in ["create", "update", "partial_update"]:
+            return [IsOwnerOrReadOnly()]
+
         return [IsAuthenticatedOrReadOnly()]
 
     @action(methods=['post'], detail=True, url_path='toggle-mark')
     def mark_favorite(self, request, *args, **kwargs):
-        #queryset = Advertisement.objects.filter('creator' != request.user.id)
         post = self.get_object()
         user = request.user
         mark = user.favorites.filter(id=post.id).exists()
@@ -43,8 +43,9 @@ class AdvertisementViewSet(ModelViewSet):
             user.favorites.remove(post)
         else:
             user.favorites.add(post)
-        return Response({'status': "Added" if mark else "Removed"})
+        return Response({'status': "Removed" if mark else "Added"})
 
-    @action(methods=['get'], detail=False)
+    @action(methods=['get'], detail=False, url_path='favorites')
     def get_favorite(self, request, *args, **kwargs):
-        pass
+        queryset = request.user.favorites.all()
+        return Response({'Favorites': AdvertisementSerializer(queryset, many=True).data})
