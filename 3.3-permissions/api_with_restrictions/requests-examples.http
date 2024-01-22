@@ -41,3 +41,10 @@ Content-Type: application/json
 # фильтрация по дате
 GET {{baseUrl}}/advertisements/?created_at_after=2024-01-20
 Content-Type: application/json
+
+###
+
+# Отметить избранным/Снять метку
+POST {{baseUrl}}/advertisements/41/toggle-mark/
+Content-Type: application/json
+Authorization: Token {{token2}}
