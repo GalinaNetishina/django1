@@ -24,12 +24,12 @@ Authorization: Token {{token2}}
 ###
 
 # попытка поменять объявление
-PATCH {{baseUrl}}/advertisements/42/
+DELETE  {{baseUrl}}/advertisements/53/
 Content-Type: application/json
 Authorization: Token {{token_admin}}
 
 {
-  "status": "OPEN"
+  "status": "DRAFT"
 }
 
 ###
@@ -37,18 +37,18 @@ Authorization: Token {{token_admin}}
 # фильтрация по создателю
 GET {{baseUrl}}/advertisements/?creator=2
 Content-Type: application/json
-Authorization: Token {{token2}}
+Authorization: Token {{token1}}
 
 ###
 
 # фильтрация по дате
-GET {{baseUrl}}/advertisements/?created_at_after=2024-01-20
+GET {{baseUrl}}/advertisements/?created_at_after=2024-01-22
 Content-Type: application/json
 
 ###
 
 # Отметить избранным/Снять метку
-POST {{baseUrl}}/advertisements/42/toggle-mark/
+POST {{baseUrl}}/advertisements/47/toggle-mark/
 Content-Type: application/json
 Authorization: Token {{token2}}
 
@@ -57,4 +57,4 @@ Authorization: Token {{token2}}
 # Получить список избранных
 GET {{baseUrl}}/advertisements/favorites/
 Content-Type: application/json
-Authorization: Token {{token2}}
+Authorization: Token {{token1}}

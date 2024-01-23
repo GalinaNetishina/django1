@@ -7,7 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from advertisements.filters import AdvertisementFilter
 from advertisements.models import Advertisement
-from advertisements.permissions import IsOwnerOrReadOnly, IsNoOwner
+from advertisements.permissions import IsOwner, IsNotOwner
 from advertisements.serializers import AdvertisementSerializer
 
 
@@ -28,9 +28,9 @@ class AdvertisementViewSet(ModelViewSet):
         if IsAuthenticated():
             self.queryset = self.queryset | Advertisement.objects.filter(Q(status="DRAFT") & Q(creator=self.request.user.id))
         if self.action == "mark_favorite":
-            return [IsAuthenticated(), IsNoOwner()]
-        if self.action in ["create", "update", "partial_update"]:
-            return [IsOwnerOrReadOnly()]
+            return [IsAuthenticated(), IsNotOwner()]
+        if self.action in ["create", "update", "partial_update", "delete"]:
+            return [IsOwner()]
 
         return [IsAuthenticatedOrReadOnly()]
 
