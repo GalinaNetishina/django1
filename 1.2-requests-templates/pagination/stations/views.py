@@ -3,6 +3,8 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from pagination.settings import BUS_STATION_CSV
+
 
 def index(request):
     return redirect(reverse('bus_stations'))
@@ -11,14 +13,14 @@ def index(request):
 def bus_stations(request):
     page_number = int(request.GET.get('page', 1))
     all_stations = []
-    with open('pagination/stations_data.csv', encoding='utf-8') as f:
+    with open(BUS_STATION_CSV, encoding='utf-8') as f:
         f.readline()
         reader = csv.DictReader(f, delimiter=';')
         for row in reader:
             station = {
-                "Name": row["Наименование"].split(',')[0],
-                "Street": row["Наименование"].split(',')[1],
-                "District": row["Район"]
+                "Name": row["Название остановки"],
+                "Street": row["Описание места расположения объекта"],
+                "District": row["Район"].replace('район', '').strip()
             }
             all_stations.append(station)
 

@@ -7,7 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from advertisements.filters import AdvertisementFilter
 from advertisements.models import Advertisement
-from advertisements.permissions import IsOwner, IsNotOwner
+from advertisements.permissions import IsOwnerOrStaff, IsNotOwner
 from advertisements.serializers import AdvertisementSerializer
 
 
@@ -23,15 +23,20 @@ class AdvertisementViewSet(ModelViewSet):
     # TODO: настройте ViewSet, укажите атрибуты для кверисета,
     #   сериализаторов и фильтров
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.get_permissions():
+            queryset = queryset | Advertisement.objects.filter(Q(status="DRAFT") & Q(creator=self.request.user.id))
+        return queryset
+
     def get_permissions(self):
         """Получение прав для действий."""
-        if IsAuthenticated():
-            self.queryset = self.queryset | Advertisement.objects.filter(Q(status="DRAFT") & Q(creator=self.request.user.id))
+        if self.action == "create":
+            return [IsAuthenticated()]
         if self.action == "mark_favorite":
             return [IsAuthenticated(), IsNotOwner()]
-        if self.action in ["create", "update", "partial_update", "delete"]:
-            return [IsOwner()]
-
+        if self.action in ["update", "partial_update", "destroy"]:
+            return [IsAuthenticated(), IsOwnerOrStaff()]
         return [IsAuthenticatedOrReadOnly()]
 
     @action(methods=['post'], detail=True, url_path='toggle-mark')
@@ -47,5 +52,5 @@ class AdvertisementViewSet(ModelViewSet):
 
     @action(methods=['get'], detail=False, url_path='favorites')
     def get_favorite(self, request, *args, **kwargs):
-        queryset = request.user.favorites.all()
+        queryset = request.user.favorites.exclude(status="DRAFT")
         return Response({'Favorites': AdvertisementSerializer(queryset, many=True).data})

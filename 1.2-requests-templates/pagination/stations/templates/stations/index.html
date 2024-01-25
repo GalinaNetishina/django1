@@ -25,9 +25,9 @@
         <table class="u-full-width">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Street</th>
-                <th>District</th>
+                <th>Название</th>
+                <th>Адрес</th>
+                <th>Район</th>
             </tr>
             </thead>
             <tbody>
@@ -40,14 +40,15 @@
             {% endfor %}
             </tbody>
         </table>
-
+        <div class="pagination" style="display: flex; justify-content: center;">
         {% if page.has_previous %}
-            <a class="button button-primary" href="?page={{ page.previous_page_number }}">⟵</a>
+            <a class="button button-primary" href="?page={{ page.previous_page_number }}">На предыдущую страницу</a>
         {% endif %}
         <a class="button disabled" href="">{{ page.number }}</a>
         {% if page.has_next %}
-            <a class="button button-primary" href="?page={{ page.next_page_number }}">⟶</a>
+            <a class="button button-primary" href="?page={{ page.next_page_number }}">На следующую страницу</a>
         {% endif %}
+        </div>
     </div>
 </div>
 </body>
