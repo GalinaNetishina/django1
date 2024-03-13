@@ -1,4 +1,5 @@
 from django.db import models
+from settings import MAX_STUDENTS_PER_COURSE
 
 
 class Student(models.Model):

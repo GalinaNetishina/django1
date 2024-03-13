@@ -43,3 +43,4 @@ Content-Type: application/json
 # получение информации по датчику ✅
 GET {{baseUrl}}/sensors/2/
 Content-Type: application/json
+

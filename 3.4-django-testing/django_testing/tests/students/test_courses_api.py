@@ -120,3 +120,7 @@ def test_filter_id(client, course_factory, student_factory):
     assert len(data) == 1
     assert data[0]['id'] == target.id
 
+@parametrize()
+@pytest.mark.django_db
+def test_max_count(client, settings, max_count, ):
+    settings.MAX_STUDENTS_PER_COURSE = max_count
